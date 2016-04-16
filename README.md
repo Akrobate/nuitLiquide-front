@@ -1,6 +1,11 @@
-# nuitLiquide-front
+# NuitLiquide-front
 
-Installation 
+## Installation 
+
+bower install
+
+
+Créer le lien symbolique pour les composants bower
 
 cd app/
 
