@@ -24,11 +24,19 @@
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li is-active="active"><a ng-href="#/">Home</a></li>
+          <li is-active="active" ><a style="" ng-href="#/"><span class="glyphicon glyphicon-home"></span></a></li>
+          <li is-active="active" ><a style="" ng-href="#/propositions"><span class="glyphicon glyphicon-list-alt"></span></a></li>
+          <li is-active="active" ><a style="" ng-href="#/myprofile"><span class="glyphicon glyphicon-user"></span></a></li>
+          
           <li is-active="active"><a ng-href="#/about">About</a></li>
           <li is-active="active"><a ng-href="#/contact">Contact</a></li>
+                    
+          <li is-active="active" ><a style="color:red" ng-href="#/myprofile"><span style="color:red" class=" glyphicon glyphicon-record"></span></a></li>
+          <li is-active="active" ><a style="" ng-href="#/myprofile"><span class=" glyphicon glyphicon-record"></span></a></li>         
+          
+
         </ul>
-        <h3 class="text-muted">NuitLiquide</h3>
+        <h3 class="text-muted"><span style="color:red" class=" glyphicon glyphicon-record"></span> NuitLiquide  </h3>
       </div>
 
       <div ng-view=""></div>
@@ -78,6 +86,9 @@
         <script src="scripts/directives/ifconnected.js"></script>
         <script src="scripts/directives/isactive.js"></script>
         <script src="scripts/services/serverapi.js"></script>
+        <script src="scripts/controllers/myprofile.js"></script>
+        <script src="scripts/controllers/propositions.js"></script>
+        <script src="scripts/controllers/propositionsadd.js"></script>
         <!-- endbuild -->
         
         <!-- 92.222.218.130:1337 -->

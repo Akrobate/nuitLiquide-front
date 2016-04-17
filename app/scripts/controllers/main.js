@@ -17,64 +17,43 @@ angular.module('democratieLiquideApp')
 		$scope.registration.password2 = "";
 		$scope.registration.disablesubmit = false;
 
+
+		/*
 		serverApi.getAuthSecret(function(data) {
 			console.log(data);
 		});
-
+		*/
 
 		$scope.connect = function() {
 			var connection = {
 				login: $scope.connection.login,
 				password: $scope.connection.password,
 			};
-		    
-		    var today = new Date();
-			var dd = today.getDate();
-			var mm = today.getMonth()+1; //January is 0!
-
-			var yyyy = today.getFullYear();
-			if(dd<10){
-				dd='0'+dd
-			} 
-			if(mm<10){
-				mm='0'+mm
-			} 
-			var today = dd+'/'+mm+'/'+yyyy;
-		
-			var token = serverApi.getToken();
-			var nonce = serverApi.getNonce();
-			var date = today;
-			
-			var sDigest = crypto.createHmac('sha1', connection.password).update(connection.password).digest('hex');
-            sDigest     = crypto.createHmac('sha1', date).update(sDigest).digest('hex');
-            sDigest     = crypto.createHmac('sha1', token).update(sDigest).digest('hex');
-            sDigest     = crypto.createHmac('sha1', nonce).update(sDigest).digest('hex');
-			
-			
-			console.log("========");    
-			console.log(sDigest);    
-			
-			
-			return;
+		  
 			console.log(connection);    
 			serverApi.connect(connection.login, connection.password, function(data) {
+			
+			
 			console.log(data);
-			if(data.data.status == 'connected') {
-			console.log("USER AUTHENTIFICATED");
-			// console.log(data);
-			connected = 'ok';
-			$scope.connected = connected;
-			$location.path('/about');
-			$scope.$apply();
+			
+			if(data.status == 418) {
+				console.log("USER AUTHENTIFICATED");
+				
+				console.log("digest just after connection" + serverApi.getDigest());
+				
+				var connected = 'ok';
+				$scope.connected = connected;
+				$location.path('/about');
+				$scope.$apply();
 			} else {
-			console.log("USER DENIED");
-			console.log(data);
-			connected = 'nop';
-			$scope.connected = connected;
-			$location.path('/login');
-			$scope.$apply();
+				console.log("USER DENIED");
+				var connected = 'nop';
+				$scope.connected = connected;
+				$location.path('/');
+				$scope.$apply();
 			}
-			});        
+			
+			});	
 		}
 
 
@@ -89,7 +68,18 @@ angular.module('democratieLiquideApp')
 			
 			console.log(registration);    
 			serverApi.postCreateUser(registration, function(data) {
+			
 				console.log(data);
+				console.log("Heeeeeerrrreeeee11111");
+				serverApi.verifyUser(registration.email, function(res) {
+					console.log(res);
+					console.log("Heeeeeerrrreeeee22222");
+					
+				});
+				
+				/*
+				console.log("Heeeeeerrrreeeee");
+				
 				if(data.data.status == 'connected') {
 					console.log("USER SUSCRIBED");
 					// console.log(data);
@@ -104,7 +94,7 @@ angular.module('democratieLiquideApp')
 					connected = 'nop';
 					$location.path('/');
 					$scope.$apply();
-				}
+				}*/
 			});        
 		}
 
@@ -112,7 +102,6 @@ angular.module('democratieLiquideApp')
 
 
 		$scope.$watch("registration.password2", function() {
-			console.log($scope);
 			if ($scope.registration.password2 != "") {
 				if ($scope.registration.password == $scope.registration.password2) {
 					$scope.registration.notidentical = "has-success";

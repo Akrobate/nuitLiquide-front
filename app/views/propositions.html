@@ -1,0 +1,40 @@
+
+<a style="" ng-href="#/propositionsadd"><span class="glyphicon glyphicon-plus"></span> Ajouter une proposition</a>
+
+<p>Les propositions actuellement a l'étude 
+
+</p>
+<div class="row" custom-full-height="true">
+	<div class="col-sm-12">
+		<div class="list-group">
+
+		<div ng-repeat="proposition in propositions" class="list-group-item">  
+			<h4 class="list-group-item-heading">{{proposition.title}} (Brouillon)</h4>
+			<div class="list-group-item-text">
+				<div class="row">
+					<div class="col-sm-8">
+					<h4>
+						<span class="label label-warning" dateview="{{proposition.propositiondatetime}}">Date du cours</span>
+						<span class="label label-primary">{{proposition.duration}} minutes</span>
+						<span class="label label-primary">{{proposition.tarifhoraire}}€</span>
+					</h4>
+							      	
+					</div>
+					<div class="col-sm-4 text-right">
+					
+						<a class="btn btn-info btnacceptproposition" ng-href="#/addproposition/{{proposition.id}}" type="button">Editer</a>
+						
+						<button class="btn btn-danger btnacceptproposition" ng-click="removeDraft(proposition.id)" type="button">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						
+						
+						<h3 ng-if="proposition.accepted"><span class="label label-info">Offre acceptée</span></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+	</div><!-- /.col-sm-12 -->
+</div>

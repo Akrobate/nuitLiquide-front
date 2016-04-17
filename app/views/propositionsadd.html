@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-sm-6">
+			</div>	
+			<div class="col-sm-6 text-right">
+				<button type="button" ng-show="showPublishButton" ng-click="publish()" class="btn btn-default btn-primary">Publier</button>
+				<button type="button" ng-click="update()" class="btn btn-default">Mettre à jour l'offre</button>
+			</div>	
+		</div>
+
+		<br />
+
+		<form role="form">
+
+	 		
+
+				<div class="row">
+					<div class="col-lg-12">
+			 			<div class="form-group">
+							<label for="exampleInputEmail1">Titre de la proposition</label>
+							<input type="text" ng-model="proposition.label" class="form-control" placeholder="Titre de la proposition" aria-describedby="basic-addon1">
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-group">
+							<label for="exampleInputEmail1">Description</label>
+							<textarea class="form-control" ng-model="proposition.description" rows="5"></textarea>
+						</div>
+					</div>
+				</div>
+			
+		</form>	
+	</div>
+</div>
+
+	  
+	 

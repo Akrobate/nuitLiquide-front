@@ -15,7 +15,156 @@ angular.module('democratieLiquideApp')
 	this.token = null;
 	this.digest = null;
 	this.nonce = null;
+	this.date = null;
+
 	this.calltype = "POST";
+
+	this.email = null;
+	this.password = null;
+
+
+	var self = this;
+
+
+	/**
+	 *	Initialisation de once
+	 */
+
+	this.nonce = Math.floor((Math.random() * 100000) + 1);
+	console.log("Nonce : " + this.nonce );
+	
+	
+	/**
+	 *	Methode qui charge tous les jobs publiés
+	 *	
+	 */
+
+	
+	this.requestApi = function(query, callback) {
+		var parent = this;
+		//console.log(sessionStorage.token);
+
+
+		/*
+		if (this.token == null) {
+			var tmp = angular.fromJson(sessionStorage.token);
+			//console.log(tmp);
+			if (tmp !== undefined) {
+				this.token = tmp;
+			}
+		}
+		
+		if (this.digest == null) {
+			var tmp = angular.fromJson(sessionStorage.digest);
+			console.log("Digest : " + tmp);
+			if (tmp != undefined) {
+				this.digest = tmp;
+			}
+		}
+		*/
+		
+		
+		//console.log(this.token);
+		
+		if (query.calltype === undefined) {
+			this.calltype = "POST";
+		
+		} else {
+			this.calltype = query.calltype;
+		}
+		
+		if (query.params === undefined) {
+			query.params = {};
+		}
+		
+		query.params.token = this.token;
+		query.params.digest = this.digest;
+		
+		console.log("Before ajax call");
+		/*
+		,
+			error: function(data) {
+			
+				return callback(data);	
+			}
+			*/
+		$.ajax({
+			url: this.apiPath + "/" + query.module + "/" + query.action,
+			type: this.calltype,
+			data: JSON.stringify(query.params),
+			contentType:"application/json; charset=utf-8",
+			dataType: 'json',
+	/*		success: function(data) {
+				console.log("===Api request Success callback ===");
+				console.log(data);
+				
+				return callback(data);		 	
+			},*/
+			error: function(data) {
+				console.log("===Api request Error callback ===");
+				console.log(data);
+				return callback(data);	
+			} 
+		}).done(function(data){
+			console.log("===Api request Done callback ===");
+			console.log(data);
+			return callback(data);	
+		});
+	};
+    
+    
+	this.quickRequestApi = function(module, action, params, callback) {
+		var query = {};
+		query.module = module;
+		query.action = action;
+		query.params = params;
+		this.requestApi(query, callback);
+	};
+	
+	
+	
+	this.getCurrentDate = function() {
+	  	var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+
+		var yyyy = today.getFullYear();
+		if(dd<10){
+			dd='0'+dd
+		} 
+		if(mm<10){
+			mm='0'+mm
+		} 
+		var today = dd+'/'+mm+'/'+yyyy;
+
+		//var token = serverApi.getToken();
+		//var nonce = serverApi.getNonce();
+		var date = today;
+		return date;
+	}
+	
+	
+	
+	
+
+	/**
+	 *	On récupere le token des que le serverAPI est invoké
+	 *	On le stock dans les variables membres de la classe
+	 *
+	 */
+	 
+	 console.log("Server API right now recreated!!!!");
+	 
+	var query = {};
+	query.module = 'authentication';
+	query.action = 'secret';
+	query.calltype = 'POST';
+	this.requestApi(query, function(data) {
+		self.token = data.token;
+		//.token = data.token;
+		
+		console.log(self.token);
+	});
 
 
 	this.getToken = function() {
@@ -27,6 +176,13 @@ angular.module('democratieLiquideApp')
 		return this.nonce;
 	}
 
+
+	this.getDigest = function() {
+		this.digest	= this.email + this.password + this.date + this.token + this.nonce;
+		return this.digest;
+	}
+
+
     
 	/**
 	 *	Methode de connection
@@ -34,10 +190,30 @@ angular.module('democratieLiquideApp')
 	 */
 
     this.connect = function(login, password, callback) {
+    
+		query.module = 'authentication';
+		query.action = 'login';
+		query.calltype = 'POST';
+		
 		var params = {};
-		params.login = login;
+		params.email = login;
 		params.password = password;	
-		this.quickRequestApi('users', 'login', params, callback);
+		params.date = this.getCurrentDate();
+		params.nonce = this.nonce;
+
+		this.email = login;
+		this.password = password;	
+		this.date = this.getCurrentDate();
+		this.nonce = this.nonce;
+		
+		query.params = params;
+
+		this.digest	= login + password + params.date + this.token + this.nonce;
+		 
+		this.requestApi(query, function(data) {
+			return callback(data);
+		});
+	
 	}
     
     
@@ -73,21 +249,21 @@ angular.module('democratieLiquideApp')
 	
 	
 	/**
-	 *	Methode qui charge tous les jobs
+	 *	Methode qui verifie la connection
 	 *	
 	 */
 	
 	this.checkConnection = function(callback) {
 		var query = {};
-		query.module = 'users';
+		query.module = 'user';
 		query.action = 'access';
 		this.requestApi(query, callback);
 	}
 	
 	
 	/**
-	 *	Methode qui charge tous les jobs
-	 *	
+	 *	Methode se deconnecte
+	 *	@todo
 	 */
 	
 	this.logout = function(callback) {
@@ -99,83 +275,61 @@ angular.module('democratieLiquideApp')
 	
 	
 	/**
-	 *	Methode qui charge tous les jobs
+	 *	Methode verifyUser les user
 	 *	
 	 */
 	
-	this.loadAllSkills = function(callback) {
+	this.verifyUser = function(email, callback) {
 		var query = {};
-		query.module = 'skills';
-		query.action = 'getall';
+		var params = {}
+		params.email = email;
+		query.module = 'user';
+		query.action = 'verify';
+		query.calltype = 'POST';
+		query.params = params;
 		this.requestApi(query, callback);
+		
 	}
 	
 
-
 	/**
-	 *	Methode qui charge tous les jobs publiés
+	 *	Methode verifyUser les user
 	 *	
 	 */
-
 	
-	this.requestApi = function(query, callback) {
-		var parent = this;
-		console.log(sessionStorage.token);
-
-		if (this.token == null) {
-			var tmp = angular.fromJson(sessionStorage.token);
-			console.log(tmp);
-			if (tmp !== undefined) {
-				this.token = tmp;
-			}
-		}
-		
-		if (this.digest == null) {
-			var tmp = angular.fromJson(sessionStorage.digest);
-			console.log(tmp);
-			if (tmp != undefined) {
-			this.digest = tmp;
-			}
-		}
-		console.log(this.token);
-		
-		if (query.calltype === undefined) {
-			this.calltype = "POST";
-		
-		} else {
-			this.calltype = query.calltype;
-		}
-		
-		if (query.params === undefined) {
-			query.params = {};
-		}
-		
-		query.params.token = this.token;
-		query.params.digest = this.digest;
-		
-		$.ajax({
-		url: this.apiPath + "/" + query.module + "/" + query.action,
-			type: this.calltype,
-			data: JSON.stringify(query.params),
-			contentType:"application/json; charset=utf-8",
-			dataType:"json",
-			success: function(data) {
-				if (parent.token != data.token) {
-					sessionStorage.token = angular.toJson(data.token);
-				}
-				parent.token = data.token;
-				return callback(data);		 	
-			}
-		});
-	};
-    
-    
-	this.quickRequestApi = function(module, action, params, callback) {
+	this.getPropositions = function(callback) {
 		var query = {};
-		query.module = module;
-		query.action = action;
+		var params = {}
+		params.digest = this.getDigest();
+		params.date = this.date;
+		
+		query.module = 'proposition';
+		query.action = "get";
+		query.calltype = 'POST';
+		
 		query.params = params;
 		this.requestApi(query, callback);
-	};
+		
+	}
+
+	/**
+	 *	Methode verifyUser les user
+	 *	
+	 */
+	
+	this.createProposition = function(params, callback) {
+		var query = {};
+//		var params = {}
+		params.digest = this.getDigest();
+		params.date = this.date;
+		
+		query.module = 'proposition';
+		query.action = "create";
+		query.calltype = 'POST';
+		query.params = params;
+		this.requestApi(query, callback);
+		
+	}
+
      
 });

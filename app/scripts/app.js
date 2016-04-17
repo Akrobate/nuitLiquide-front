@@ -31,6 +31,18 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/myprofile', {
+        templateUrl: 'views/myprofile.html',
+        controller: 'MyprofileCtrl'
+      })
+      .when('/propositions', {
+        templateUrl: 'views/propositions.html',
+        controller: 'PropositionsCtrl'
+      })
+      .when('/propositionsadd', {
+        templateUrl: 'views/propositionsadd.html',
+        controller: 'PropositionsaddCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
