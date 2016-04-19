@@ -18,12 +18,6 @@ angular.module('democratieLiquideApp')
 		$scope.registration.disablesubmit = false;
 
 
-		/*
-		serverApi.getAuthSecret(function(data) {
-			console.log(data);
-		});
-		*/
-
 		$scope.connect = function() {
 			var connection = {
 				login: $scope.connection.login,
