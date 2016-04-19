@@ -43,6 +43,18 @@ angular
         templateUrl: 'views/propositionsadd.html',
         controller: 'PropositionsaddCtrl'
       })
+      .when('/voteadd', {
+        templateUrl: 'views/voteadd.html',
+        controller: 'VoteaddCtrl'
+      })
+      .when('/experts', {
+        templateUrl: 'views/experts.html',
+        controller: 'ExpertsCtrl'
+      })
+      .when('/amendements', {
+        templateUrl: 'views/amendements.html',
+        controller: 'AmendementsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

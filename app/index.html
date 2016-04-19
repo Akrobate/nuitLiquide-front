@@ -26,7 +26,7 @@
         <ul class="nav nav-pills pull-right">
           <li is-active="active" ><a style="" ng-href="#/"><span class="glyphicon glyphicon-home"></span></a></li>
           <li is-active="active" ><a style="" ng-href="#/propositions"><span class="glyphicon glyphicon-list-alt"></span></a></li>
-          <li is-active="active" ><a style="" ng-href="#/myprofile"><span class="glyphicon glyphicon-user"></span></a></li>
+          <li is-active="active" if-connected="show"><a style="" ng-href="#/myprofile"><span class="glyphicon glyphicon-user"></span></a></li>
           
           <li is-active="active"><a ng-href="#/about">About</a></li>
           <li is-active="active"><a ng-href="#/contact">Contact</a></li>
@@ -89,6 +89,9 @@
         <script src="scripts/controllers/myprofile.js"></script>
         <script src="scripts/controllers/propositions.js"></script>
         <script src="scripts/controllers/propositionsadd.js"></script>
+        <script src="scripts/controllers/voteadd.js"></script>
+        <script src="scripts/controllers/experts.js"></script>
+        <script src="scripts/controllers/amendements.js"></script>
         <!-- endbuild -->
         
         <!-- 92.222.218.130:1337 -->
