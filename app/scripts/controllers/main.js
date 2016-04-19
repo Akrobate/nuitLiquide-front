@@ -35,14 +35,14 @@ angular.module('democratieLiquideApp')
 				
 				console.log("digest just after connection" + serverApi.getDigest());
 				
-				connected = 'ok';
-				$scope.connected = connected;
+				//connected = 'ok';
+				$scope.connected = 'ok';
 				$location.path('/about');
 				$scope.$apply();
 			} else {
 				console.log("USER DENIED");
-				connected = 'nop';
-				$scope.connected = connected;
+				//connected = 'nop';
+				$scope.connected = 'nop';
 				$location.path('/');
 				$scope.$apply();
 			}
