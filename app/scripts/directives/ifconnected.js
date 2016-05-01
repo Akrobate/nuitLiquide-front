@@ -7,23 +7,22 @@
  * # ifConnected
  */
 angular.module('democratieLiquideApp')
-  .directive('ifConnected', function () {
+  .directive('ifConnected', ['user', function (user) {
     return {
       restrict: 'A',
       link: function(scope, element, attrs, controller) {
         var showhide = attrs.ifConnected;
         scope.$watch(
 			function () {
-				return window.connected;
+				return user.connected;
 			}, function(n,o){
 				console.log("changed ",n);		
-				if (n == 'ok') {
+				if (n === true) {
 					if (showhide == 'show') {
 						element.show();
 					} else {
 						element.hide();
 					}
-					
 				} else {
 					if (showhide == 'show') {		
 					   element.hide();
@@ -34,4 +33,5 @@ angular.module('democratieLiquideApp')
 			});
       }
     };
-});
+}]);
+

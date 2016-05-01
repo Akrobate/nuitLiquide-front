@@ -9,15 +9,15 @@
  */
 
 angular.module('democratieLiquideApp')
-	.controller('MainCtrl', function ($scope, $http, $location, serverApi) {
+	.controller('MainCtrl', function ($scope, $http, $location, serverApi, user) {
 		//serverApi.requestApi();
 
 		$scope.registration = {};
 		$scope.registration.password = "";
 		$scope.registration.password2 = "";
 		$scope.registration.disablesubmit = false;
-
-
+		
+		
 		$scope.connect = function() {
 			var connection = {
 				login: $scope.connection.login,
@@ -27,25 +27,22 @@ angular.module('democratieLiquideApp')
 			console.log(connection);    
 			serverApi.connect(connection.login, connection.password, function(data) {
 			
-			
-			console.log(data);
-			
-			if(data.status == 418) {
-				console.log("USER AUTHENTIFICATED");
+				console.log(data);
+				if(data.status == 418) {
+					console.log("USER AUTHENTIFICATED");
+					console.log("digest just after connection" + serverApi.getDigest());
 				
-				console.log("digest just after connection" + serverApi.getDigest());
-				
-				//connected = 'ok';
-				$scope.connected = 'ok';
-				$location.path('/about');
-				$scope.$apply();
-			} else {
-				console.log("USER DENIED");
-				//connected = 'nop';
-				$scope.connected = 'nop';
-				$location.path('/');
-				$scope.$apply();
-			}
+					user.connected = true;
+					user.data = data;
+					$location.path('/about');
+					$scope.$apply();
+				} else {
+					console.log("USER DENIED");
+					user.connected = false;
+					user.data = {};
+					$location.path('/');
+					$scope.$apply();
+				}
 			
 			});	
 		}
