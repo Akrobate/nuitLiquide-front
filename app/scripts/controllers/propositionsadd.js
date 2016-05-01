@@ -12,7 +12,7 @@ angular.module('democratieLiquideApp')
    
     console.log("digest : " + serverApi.getDigest());
    
-    // Modèle standart d'une offre
+    // Modèle standart d'une proposition
     $scope.proposition = {};
     $scope.proposition.description = "";    
     $scope.proposition.label = "";
@@ -24,28 +24,21 @@ angular.module('democratieLiquideApp')
 	});
 	
 	$scope.update = function() {
-	
+		// Champs obligatoires
 		if (this.checkGeneralpropositionInformation()) {
-		
 			var params = $scope.proposition;			
-			
 			serverApi.createProposition(params, function(data) {
 				console.log(data);
 			});
-		
 		} else {
-		
 			console.log("Missing Fields");
 		}
-	
-	
 	};	
-   
-
    
 	
 	/**
 	 *	Verifications champs obligatoires
+	 *
 	 */
 	
 	$scope.checkGeneralpropositionInformation = function() {

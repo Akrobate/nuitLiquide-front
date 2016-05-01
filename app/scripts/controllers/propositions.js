@@ -18,15 +18,13 @@ angular.module('democratieLiquideApp')
 		var updateList = function() {
 			serverApi.getPropositions(function(data) {
 				console.log(data);
-				//server.connect('skillstester', '987', connected);
-				//$scope.propositions = data.data.propositions;
-				//$scope.$apply();
-			
+				$scope.propositions = data;
+				$scope.$apply();
 			});  
 		};
 
 		updateList();
-
+		
 		$scope.$on("$destroy", function(){
 
 		});

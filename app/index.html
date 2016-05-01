@@ -24,13 +24,13 @@
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li is-active="active" ><a style="" ng-href="#/"><span class="glyphicon glyphicon-home"></span></a></li>
+          <li is-active="active" >
+          	<a style="" ng-href="#/"><span class="glyphicon glyphicon-home"></span></a></li>
           <li is-active="active" if-connected="show"><a style="" ng-href="#/propositions"><span class="glyphicon glyphicon-list-alt"></span></a></li>
           <li is-active="active" if-connected="show"><a style="" ng-href="#/myprofile"><span class="glyphicon glyphicon-user"></span></a></li>
-          
+
           <li is-active="active"><a ng-href="#/about">About</a></li>
-          <li is-active="active"><a ng-href="#/contact">Contact</a></li>
-                    
+
           <li is-active="active"  if-connected="show"><a style="color:red" ng-href="#/myprofile"><span style="color:red" class=" glyphicon glyphicon-record"></span></a></li>
           <li is-active="active"  if-connected="hide"><a style="" ng-href="#/myprofile"><span class=" glyphicon glyphicon-record"></span></a></li>         
           
@@ -97,6 +97,8 @@
         <script src="scripts/services/user.js"></script>
         <script src="scripts/directives/ifconnected.js"></script>
         <script src="scripts/directives/isactive.js"></script>
+        <script src="scripts/controllers/dashboard.js"></script>
+        <script src="scripts/controllers/proposition.js"></script>
         <!-- endbuild -->
         
         <!-- 92.222.218.130:1337 -->

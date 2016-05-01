@@ -55,6 +55,14 @@ angular
         templateUrl: 'views/amendements.html',
         controller: 'AmendementsCtrl'
       })
+      .when('/proposition/:id', {
+        templateUrl: 'views/proposition.html',
+        controller: 'PropositionCtrl'
+      })
+      .when('/Dashboard', {
+        templateUrl: 'views/dashboard.html',
+        controller: 'DashboardCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
