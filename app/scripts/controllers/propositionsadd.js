@@ -29,11 +29,22 @@ angular.module('democratieLiquideApp')
 			var params = $scope.proposition;			
 			serverApi.createProposition(params, function(data) {
 				console.log(data);
+				
+				$timeout(function() {
+					$location.path('/propositions');
+					$scope.$apply();
+				});
+				
 			});
 		} else {
 			console.log("Missing Fields");
 		}
 	};	
+   
+   
+   
+   
+   
    
 	
 	/**
@@ -59,5 +70,16 @@ angular.module('democratieLiquideApp')
 		return valid;
 	};
 	
+	
+	/*
+	
+	  taOptions.toolbar = [
+      ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
+      ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
+      ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'],
+      ['html', 'insertImage','insertLink', 'insertVideo', 'wordcount', 'charcount']
+  ];
+  
+  */
 
 });

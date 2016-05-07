@@ -352,7 +352,26 @@ angular.module('democratieLiquideApp')
 		
 	}
 	
-	
 
+
+	/**
+	 *	Methode get one domain
+	 *	
+	 */
+	
+	this.getDomains = function(callback) {
+		var query = {};
+		var params = {}
+		params.digest = this.getDigest();
+		params.date = this.date;
+		
+		query.module = 'domain';
+		query.action = "get";
+		query.calltype = 'POST';
+		
+		query.params = params;
+		this.requestApi(query, callback);
+		
+	}
      
 });

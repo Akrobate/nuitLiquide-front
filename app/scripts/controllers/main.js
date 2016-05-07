@@ -45,7 +45,7 @@ angular.module('democratieLiquideApp')
 					console.log("USER AUTHENTIFICATED / Digest : " + serverApi.getDigest());
 					user.setConnected(data);
 					$timeout(function() {
-						$location.path('/about');
+						$location.path('/dashboard');
 						$scope.$apply();
 					});
 				} else {
