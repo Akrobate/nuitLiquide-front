@@ -9,13 +9,25 @@
  */
 
 angular.module('democratieLiquideApp')
-	.controller('MainCtrl', function ($scope, $http, $location, serverApi, user) {
-		//serverApi.requestApi();
-
+	.controller('MainCtrl', function ($scope, $http, $location, serverApi, user, $timeout, $rootScope) {
+		
+		
 		$scope.registration = {};
 		$scope.registration.password = "";
 		$scope.registration.password2 = "";
 		$scope.registration.disablesubmit = false;
+		
+		//user.tryToConnect();
+		
+		
+		
+		$rootScope.$on('user:connected', function(){
+      	  $timeout(function() {
+				$scope.$apply();
+				console.log("User connected works");
+			});
+     	 });
+		
 		
 		
 		$scope.connect = function() {
@@ -23,31 +35,27 @@ angular.module('democratieLiquideApp')
 				login: $scope.connection.login,
 				password: $scope.connection.password,
 			};
-		  
+
 			console.log(connection);    
 			serverApi.connect(connection.login, connection.password, function(data) {
 			
+				data.connection = connection;
 				console.log(data);
 				if(data.status == 418) {
-					console.log("USER AUTHENTIFICATED");
-					console.log("digest just after connection" + serverApi.getDigest());
-				
-					user.connected = true;
-					user.data = data;
-					$location.path('/about');
-					$scope.$apply();
+					console.log("USER AUTHENTIFICATED / Digest : " + serverApi.getDigest());
+					user.setConnected(data);
+					$timeout(function() {
+						$location.path('/about');
+						$scope.$apply();
+					});
 				} else {
 					console.log("USER DENIED");
-					user.connected = false;
-					user.data = {};
-					$location.path('/');
-					$scope.$apply();
+//					$location.path('/');
+//					$scope.$apply();
 				}
 			
 			});	
 		}
-
-
 
 
 
@@ -65,27 +73,7 @@ angular.module('democratieLiquideApp')
 				serverApi.verifyUser(registration.email, function(res) {
 					console.log(res);
 					console.log("Heeeeeerrrreeeee22222");
-					
 				});
-				
-				/*
-				console.log("Heeeeeerrrreeeee");
-				
-				if(data.data.status == 'connected') {
-					console.log("USER SUSCRIBED");
-					// console.log(data);
-					$scope.connected = 'ok';
-					connected = 'ok';
-					$location.path('/about');
-					$scope.$apply();
-				} else {
-					console.log("USER NOT SUSCRIBED");
-					console.log(data);
-					$scope.connected = 'nop';
-					connected = 'nop';
-					$location.path('/');
-					$scope.$apply();
-				}*/
 			});        
 		}
 

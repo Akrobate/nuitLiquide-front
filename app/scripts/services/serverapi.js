@@ -145,26 +145,8 @@ angular.module('democratieLiquideApp')
 	
 	
 	
-	
 
-	/**
-	 *	On récupere le token des que le serverAPI est invoké
-	 *	On le stock dans les variables membres de la classe
-	 *
-	 */
-	 
-	 console.log("Server API right now recreated!!!!");
-	 
-	var query = {};
-	query.module = 'authentication';
-	query.action = 'secret';
-	query.calltype = 'POST';
-	this.requestApi(query, function(data) {
-		self.token = data.token;
-		//.token = data.token;
-		
-		console.log(self.token);
-	});
+	  
 
 
 	this.getToken = function() {
@@ -191,6 +173,7 @@ angular.module('democratieLiquideApp')
 
     this.connect = function(login, password, callback) {
     
+    	var query = {};
 		query.module = 'authentication';
 		query.action = 'login';
 		query.calltype = 'POST';
@@ -216,6 +199,15 @@ angular.module('democratieLiquideApp')
 	
 	}
     
+  
+  	
+
+	/**
+	 *	On récupere le token des que le serverAPI est invoké
+	 *	On le stock dans les variables membres de la classe
+	 *
+	 */
+  
     
    	/**
 	 *	Methode qui recuperant la clef secrete pour navigation
@@ -223,11 +215,17 @@ angular.module('democratieLiquideApp')
 	 */
 	
 	this.getAuthSecret = function(callback) {
+		var self = this;
 		var query = {};
 		query.module = 'authentication';
 		query.action = 'secret';
-		query.calltype = 'GET';
-		this.requestApi(query, callback);
+		query.calltype = 'POST';
+		this.requestApi(query, function(data) {
+			self.token = data.token;
+			console.log(self.token);
+			callback(data);
+		});
+
 	}
 	
 	
@@ -330,6 +328,31 @@ angular.module('democratieLiquideApp')
 		this.requestApi(query, callback);
 		
 	}
+	
+	
+	/**
+	 *	Methode get one proposition
+	 *	
+	 */
+	
+	this.getProposition = function(id, callback) {
+		var query = {};
+		var params = {}
+		params.digest = this.getDigest();
+		params.date = this.date;
+		params.propositionId = id;
+		
+		
+		query.module = 'proposition';
+		query.action = "get";
+		query.calltype = 'POST';
+		
+		query.params = params;
+		this.requestApi(query, callback);
+		
+	}
+	
+	
 
      
 });

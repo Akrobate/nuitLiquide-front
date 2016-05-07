@@ -15,8 +15,12 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'LocalStorageModule'
   ])
+  .config(['localStorageServiceProvider', function(localStorageServiceProvider){
+  localStorageServiceProvider.setPrefix('nuitlq');
+  }])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -62,6 +66,10 @@ angular
       .when('/Dashboard', {
         templateUrl: 'views/dashboard.html',
         controller: 'DashboardCtrl'
+      })
+      .when('/logout', {
+        templateUrl: 'views/logout.html',
+        controller: 'LogoutCtrl'
       })
       .otherwise({
         redirectTo: '/'
