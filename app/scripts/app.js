@@ -64,7 +64,7 @@ angular
         templateUrl: 'views/proposition.html',
         controller: 'PropositionCtrl'
       })
-      .when('/Dashboard', {
+      .when('/dashboard', {
         templateUrl: 'views/dashboard.html',
         controller: 'DashboardCtrl'
       })

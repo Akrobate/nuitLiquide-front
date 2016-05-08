@@ -1,1 +1,122 @@
-<p>This is the Dashboard view.</p>
+
+<div class="row">
+
+	<div class="col-md-6" >
+	
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">Toutes les nouvelles propositions</div>
+		<div class="panel-body">
+	
+			<div class="list-group" style="height:300px; overflow-y: scroll">
+				<div ng-repeat="proposition in propositions" class="list-group-item">  
+				
+					<div class="list-group-item-text">
+						<div class="row">
+							<div class="col-sm-8">
+								<p class="list-group-item-heading">{{proposition.label}}</p>		  	
+							</div>
+							<div class="col-sm-4 text-right">
+								<a class="btn btn-info btnacceptproposition" ng-href="#/proposition/{{proposition.id}}" type="button">Ouvrir</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	
+	
+		
+	
+	</div>
+	<div class="col-md-6" >
+	
+			<div class="panel panel-success">
+		<div class="panel-heading">Mes votes pour</div>
+		<div class="panel-body">
+	
+			<div class="list-group" style="height:300px; overflow-y: scroll">
+				<div ng-repeat="proposition in propositions" class="list-group-item">  
+				
+					<div class="list-group-item-text">
+						<div class="row">
+							<div class="col-sm-8">
+								<p class="list-group-item-heading">{{proposition.label}}</p>		  	
+							</div>
+							<div class="col-sm-4 text-right">
+								<a class="btn btn-info btnacceptproposition" ng-href="#/proposition/{{proposition.id}}" type="button">Ouvrir</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	
+	</div>
+</div>
+
+
+
+<div class="row">
+	<div class="col-md-6">
+	
+		<div class="panel panel-danger">
+		<div class="panel-heading">Mes votes contre</div>
+		<div class="panel-body">
+	
+			<div class="list-group" style="height:300px; overflow-y: scroll">
+				<div ng-repeat="proposition in propositions" class="list-group-item">  
+				
+					<div class="list-group-item-text">
+						<div class="row">
+							<div class="col-sm-8">
+								<p class="list-group-item-heading">{{proposition.label}}</p>		  	
+							</div>
+							<div class="col-sm-4 text-right">
+								<a class="btn btn-info btnacceptproposition" ng-href="#/proposition/{{proposition.id}}" type="button">Ouvrir</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+		
+	</div>
+	<div class="col-md-6">
+	
+		<div class="panel panel-warning">
+		<div class="panel-heading">Mes votes blancs</div>
+		<div class="panel-body">
+	
+			<div class="list-group" style="height:300px; overflow-y: scroll">
+				<div ng-repeat="proposition in propositions" class="list-group-item">  
+				
+					<div class="list-group-item-text">
+						<div class="row">
+							<div class="col-sm-8">
+								<p class="list-group-item-heading">{{proposition.label}}</p>		  	
+							</div>
+							<div class="col-sm-4 text-right">
+								<a class="btn btn-info btnacceptproposition" ng-href="#/proposition/{{proposition.id}}" type="button">Ouvrir</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+		</div>
+	
+	</div>
+</div>
+

@@ -8,10 +8,20 @@
  * Controller of the democratieLiquideApp
  */
 angular.module('democratieLiquideApp')
-  .controller('DashboardCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+.controller('DashboardCtrl', function ($scope, serverApi) {
+
+
+	var updateList = function() {
+		serverApi.getPropositions(function(data) {
+			console.log(data);
+			$scope.propositions = data;
+			$scope.$apply();
+		});  
+	};
+
+	updateList();
+
+
+
+
+});
