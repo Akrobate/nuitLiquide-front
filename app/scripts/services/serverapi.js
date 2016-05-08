@@ -94,20 +94,22 @@ angular.module('democratieLiquideApp')
 			data: JSON.stringify(query.params),
 			contentType:"application/json; charset=utf-8",
 			dataType: 'json',
-	/*		success: function(data) {
+			/*
+			success: function(data) {
 				console.log("===Api request Success callback ===");
 				console.log(data);
 				
 				return callback(data);		 	
-			},*/
+			},
+			*/
 			error: function(data) {
-				console.log("===Api request Error callback ===");
-				console.log(data);
+				//console.log("===Api request Error callback ===");
+				//console.log(data);
 				return callback(data);	
 			} 
 		}).done(function(data){
-			console.log("===Api request Done callback ===");
-			console.log(data);
+			//console.log("===Api request Done callback ===");
+			//console.log(data);
 			return callback(data);	
 		});
 	};
@@ -120,7 +122,6 @@ angular.module('democratieLiquideApp')
 		query.params = params;
 		this.requestApi(query, callback);
 	};
-	
 	
 	
 	this.getCurrentDate = function() {
@@ -136,19 +137,11 @@ angular.module('democratieLiquideApp')
 			mm='0'+mm
 		} 
 		var today = dd+'/'+mm+'/'+yyyy;
-
-		//var token = serverApi.getToken();
-		//var nonce = serverApi.getNonce();
 		var date = today;
 		return date;
 	}
 	
 	
-	
-
-	  
-
-
 	this.getToken = function() {
 		return this.token;
 	}
@@ -225,9 +218,7 @@ angular.module('democratieLiquideApp')
 			console.log(self.token);
 			callback(data);
 		});
-
-	}
-	
+	};
 	
 	
   	/**
@@ -310,6 +301,7 @@ angular.module('democratieLiquideApp')
 		
 	}
 
+
 	/**
 	 *	Methode verifyUser les user
 	 *	
@@ -317,7 +309,6 @@ angular.module('democratieLiquideApp')
 	
 	this.createProposition = function(params, callback) {
 		var query = {};
-//		var params = {}
 		params.digest = this.getDigest();
 		params.date = this.date;
 		
@@ -326,7 +317,6 @@ angular.module('democratieLiquideApp')
 		query.calltype = 'POST';
 		query.params = params;
 		this.requestApi(query, callback);
-		
 	}
 	
 	
@@ -341,7 +331,6 @@ angular.module('democratieLiquideApp')
 		params.digest = this.getDigest();
 		params.date = this.date;
 		params.propositionId = id;
-		
 		
 		query.module = 'proposition';
 		query.action = "get";
@@ -373,5 +362,77 @@ angular.module('democratieLiquideApp')
 		this.requestApi(query, callback);
 		
 	}
+     
+     
+     
+   	/**
+	 *	Methode Vote
+	 *	vote ENUM(N,B,Y) No Blanc Yes
+	 */
+	
+	this.vote = function(propositionId, vote, callback) {
+		var query = {};
+		var params = {}
+		params.digest = this.getDigest();
+		params.date = this.date;
+		params.propositionId = propositionId;
+		params.vote = vote;
+		
+		
+		query.module = 'proposition';
+		query.action = "vote";
+		query.calltype = 'POST';
+		
+		query.params = params;
+		this.requestApi(query, callback);
+		
+	}  
+     
+     
+         
+   	/**
+	 *	Methode get User Vote
+	 *	
+	 */
+	
+	this.getVoteFromPropositionId = function(propositionId, callback) {
+		var query = {};
+		var params = {}
+		params.digest = this.getDigest();
+		params.date = this.date;
+		params.propositionId = propositionId;
+		params.vote = ['Y', 'B', 'N'];
+		
+		
+		query.module = 'proposition';
+		query.action = "get";
+		query.calltype = 'POST';
+		
+		query.params = params;
+		this.requestApi(query, callback);
+		
+	} 
+     
+     
+   	/**
+   	 *	Méthode rendant un utilisateur expert
+     *	
+	 */
+	
+	this.becomeExpert = function(domainId, skills, callback) {
+		var query = {};
+		var params = {}
+		params.digest = this.getDigest();
+		params.date = this.date;
+		params.domainId = domainId;
+		params.skills = skills;
+		
+		query.module = 'expert';
+		query.action = 'create';
+		query.calltype = 'POST';
+		
+		query.params = params;
+		this.requestApi(query, callback);
+	} 
      
 });

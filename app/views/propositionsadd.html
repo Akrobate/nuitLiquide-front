@@ -13,8 +13,11 @@
 
 		<form role="form">
 		
-			<select ng-model="proposition.domainId" class="form-control">
-				<option>1</option>
+			<select ng-model="proposition.domainId" class="form-control" >
+				<option 
+					ng-repeat="domain in domains"
+					value="{{domain.id}}"
+					ng-selected="{{domain.id === proposition.domainId}}">{{domain.label}}</option>
 			</select>
 			
 			<div class="row">

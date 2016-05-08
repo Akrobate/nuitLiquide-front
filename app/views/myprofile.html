@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
-  <li role="presentation" ng-class="{active : activeValue === 'tabprofilevisibility'}" ng-click="showTab('tabprofilevisibility')"><a  name="#">Votre profil</a></li>
-  <li role="presentation" ng-class="{active : activeValue === 'tabexpertisevisibility'}" ng-click="showTab('tabexpertisevisibility')"><a name="#">Votre expertise</a></li>
-  <li role="presentation" ng-class="{active : activeValue === 'tabmessagesvisibility'}" ng-click="showTab('tabmessagesvisibility')"><a name="#">Messages </a>  </li>
+  <li role="presentation" ng-class="{active : activeValue === 'tabprofilevisibility'}" ng-click="showTab('tabprofilevisibility')"><a  name="#" href="">Votre profil</a></li>
+  <li role="presentation" ng-class="{active : activeValue === 'tabexpertisevisibility'}" ng-click="showTab('tabexpertisevisibility')"><a name="#" href="">Votre expertise</a></li>
+  <li role="presentation" ng-class="{active : activeValue === 'tabmessagesvisibility'}" ng-click="showTab('tabmessagesvisibility')"><a name="#" href="">Messages </a>  </li>
 </ul>
 
 
@@ -13,7 +13,7 @@
 			<form>
 			  <div class="form-group">
 				<label for="exampleInputEmail1">Votre email</label>
-				<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+				<input type="email" class="form-control" id="exampleInputEmail1" ng-model="profile.email" placeholder="Email">
 			  </div>
 			  
 			  <!--div class="form-group">
@@ -44,19 +44,24 @@
 			<form>
 			  <div class="form-group">
 				<label for="domaineExpertise">Choisissez votre domaine d'expertise</label>
-				<select id="domaineExpertise" ng-model="proposition.domainId" class="form-control">
-					<option>1</option>
+				
+				<select id="domaineExpertise" ng-model="expert.domainId" class="form-control" >
+					<option 
+						ng-repeat="domain in domains"
+						value="{{domain.id}}"
+						ng-selected="{{domain.id === expert.domainId}}">{{domain.label}}</option>
 				</select>
+			
 			  </div>
 			  <br />
 			  <div class="form-group">
 				<label for="descriptionExpertise">Décrivez votre expertise</label>			  
-				<textarea class="form-control"  id="descriptionExpertise" rows="8"></textarea>
+				<textarea class="form-control" ng-model="expert.skills" id="descriptionExpertise" rows="8"></textarea>
 			  </div>
 
 				<br />
 
-			 <button type="button" class="btn btn-primary btn-lg">Devenir Expert</button>
+			 <button type="button" ng-click="becomeExpert()" class="btn btn-primary btn-lg">Devenir Expert</button>
 			</form>
 			<br />
 		</div>

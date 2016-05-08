@@ -1,66 +1,86 @@
 
-
-
 <!--
+
+temporary ressources
+
 ./images/up.gif
 ./images/down.gif
 -->
 
-
-
 <div class="row" >
-		<div class="col-md-8">
+	<div class="col-md-8">
 		<div>
-
 			<h1>{{label}}</h1>
 			<br />
-
 			<div ng-bind-html="description"></div>
-
+			<br />
+			<br />
+		</div>
+		
+	</div>
+	<div class="col-md-4">
+		
+		<div  ng-hide="alreadyVoted">
+			<h3>Votre vote</h3>
+			<br />
+			<div class="text-center">
+				<div class="btn-group btn-group " role="group" aria-label="...">
+				  <button type="button" class="btn btn-default" ng-class="{'btn-success' : selectedVote === 'pour'}" ng-click="selectVote('pour')">
+				  	Pour
+				  </button>
+				  <button type="button" class="btn btn-default" ng-class="{'btn-warning' : selectedVote === 'neutre'}" ng-click="selectVote('neutre')">
+				  	Neutre
+				  </button>
+				  <button type="button" class="btn btn-default" ng-class="{'btn-danger' : selectedVote === 'contre'}" ng-click="selectVote('contre')">
+				  	Contre
+				  </button>
+				</div>
 			</div>
 		
-		</div>
+			<br />
 		
-		
-		<div class="col-md-4">
-		
-		<h3>Vous n'avez pas encore voté</h3>
-		<br />
-		<div class="text-center">
-			<div class="btn-group btn-group " role="group" aria-label="...">
-			  <button type="button" class="btn btn-default">
-			  	Pour
-			  </button>
-			  <button type="button" class="btn btn-default">
-			  	Neutre
-			  </button>
-			  <button type="button" class="btn btn-default">
-			  	Contre
+			<div class="text-center" >
+			  <button type="button" class="btn btn-primary btn-lg" ng-disabled="voteDisabled" ng-click="addMyVote()">
+			  	Voter {{selectedVote}}
 			  </button>
 			</div>
+		
+		</div>		
+		
+		
+		
+		<div  ng-show="alreadyVoted">
+			<h3>Vous avez déjà voté...</h3>
+		
+			<br />
+			
+			<div ng-show="selectedVote === 'contre'" class="alert alert-danger">
+				Vous avez voté contre.
+			</div>
+			
+			<div ng-show="selectedVote === 'pour'" class="alert alert-success">
+				Vous avez voté pour
+			</div>
+			<div ng-show="selectedVote === 'neutre'" class="alert alert-warning">
+				Vous avez voté Neutre
+			</div>
+			
+			<br />
+			<br />
+			
+			<div class="text-center">
+			  <button type="button" class="btn btn-primary" ng-click="editMyVote()">
+			  	Changer mon vote...
+			  </button>
+			</div>
+			
 		</div>
 		
-		
-		<br />
-		
-		
-		<div class="text-center">
-		  <button type="button" class="btn btn-primary btn-lg">
-		  	Voter
-		  </button>
-		</div>
-		
 		<br />
 		<br />
+	</div>
+			
+</div>
 		
 		
-		</div>
 		
-		
-		
-
-
-
-
-
-

@@ -19,9 +19,29 @@ angular.module('democratieLiquideApp')
 	$scope.proposition.domainId = 1;  
     $scope.generalValidated = false;
     
+    $scope.domains = [];
+    
+    // On surveille quand le formulaire est valide
     $scope.$watch('generalValidated', function(newValue) {
   		
 	});
+	
+	
+	// On récupere la liste des domaines
+	serverApi.getDomains(function(data) {
+		$scope.domains = data;
+		console.log(data);
+		$timeout(function() {
+			$scope.$apply();
+		});
+	});
+	
+	
+	/**
+	 *	Méthode de sauvegarde d'une proposition
+	 *
+	 *
+	 */
 	
 	$scope.update = function() {
 		// Champs obligatoires
@@ -40,10 +60,6 @@ angular.module('democratieLiquideApp')
 			console.log("Missing Fields");
 		}
 	};	
-   
-   
-   
-   
    
    
 	
