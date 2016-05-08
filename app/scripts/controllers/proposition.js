@@ -50,6 +50,9 @@ angular.module('democratieLiquideApp')
 				$scope.selectedVote = self.mapDecodeVote(data.myVote);
 				console.log("Seeelected vote from init");
 				console.log($scope.selectedVote);
+				$timeout(function() {
+					$scope.$apply();
+				});
 			} else {
 				$scope.alreadyVoted = false;
 			}	

@@ -307,6 +307,29 @@ angular.module('democratieLiquideApp')
 	 *	
 	 */
 	
+	this.getPropositionsFiltered = function(filter, callback) {
+		var query = {};
+		var params = {}
+		params = filter;
+		params.digest = this.getDigest();
+		params.date = this.date;
+		
+		query.module = 'proposition';
+		query.action = "get";
+		query.calltype = 'POST';
+		
+		query.params = params;
+		this.requestApi(query, callback);
+		
+	}
+
+
+
+	/**
+	 *	Methode verifyUser les user
+	 *	
+	 */
+	
 	this.createProposition = function(params, callback) {
 		var query = {};
 		params.digest = this.getDigest();
