@@ -8,7 +8,7 @@
  * Controller of the democratieLiquideApp
  */
 angular.module('democratieLiquideApp')
-  .controller('PropositionsaddCtrl', function ($scope, $http, $location, serverApi) {
+  .controller('PropositionsaddCtrl', function ($scope, $http, $location, $timeout, serverApi) {
    
     console.log("digest : " + serverApi.getDigest());
    

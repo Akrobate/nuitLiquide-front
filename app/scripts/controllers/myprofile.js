@@ -9,9 +9,27 @@
  */
 angular.module('democratieLiquideApp')
   .controller('MyprofileCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+
+
+
+	$scope.tabprofilevisibility = true;
+	$scope.tabexpertisevisibility = false;
+	$scope.tabmessagesvisibility = false;	
+	$scope.activeValue = 'tabprofilevisibility';
+
+	// Tabs controller
+	
+	
+	
+	$scope.showTab = function(id) {
+		console.log(id);
+		$scope.tabprofilevisibility = false;
+		$scope.tabexpertisevisibility = false;
+		$scope.tabmessagesvisibility = false;
+		$scope[id] = true;
+		$scope.activeValue = id;
+	}
+
+
+
   });
