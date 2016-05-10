@@ -26,6 +26,10 @@ angular.module('democratieLiquideApp')
 	var self = this;
 
 
+	// Cached data
+	this.domains = null;
+
+
 	/**
 	 *	Initialisation de once
 	 */
@@ -382,8 +386,10 @@ angular.module('democratieLiquideApp')
 		query.calltype = 'POST';
 		
 		query.params = params;
-		this.requestApi(query, callback);
-		
+		this.requestApi(query, function(data) {
+			self.domains = data;
+			callback(data);
+		});
 	}
      
      

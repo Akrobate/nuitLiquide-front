@@ -12,9 +12,6 @@ angular.module('democratieLiquideApp')
 
 		$scope.propositions = [];
 
-		console.log("digest : " + serverApi.getDigest());
-
-
 		var updateList = function() {
 			serverApi.getPropositions(function(data) {
 				console.log(data);
